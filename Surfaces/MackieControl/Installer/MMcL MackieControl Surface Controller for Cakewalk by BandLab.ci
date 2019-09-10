@@ -9,7 +9,7 @@
    <dlgfont >verdana</>
    <headlogo >default - 1</>
    <dlgfontsize >s9</>
-   <output >D:\Cakewalk-Control-Surface-SDK\Surfaces\MackieControl\Installer</>
+   <output >C:\Projects\msmcleod\Cakewalk-Control-Surface-SDK\Surfaces\MackieControl\Installer</>
    <exename >MMcLMackieControlSetup.exe</>
    <beffile ></>
    <aftfile ></>
@@ -143,21 +143,21 @@
                         <srclist >
                            <rows rel = unpack >
                               <_ >
-                                 <filename >D:\Cakewalk-Control-Surface-SDK\Bin\x64\MackieControl-MMcL*.dll</>
+                                 <filename >C:\Projects\msmcleod\Cakewalk-Control-Surface-SDK\Bin\x64\MackieControl-MMcL*.dll</>
                                  <recurse >1</>
                                  <justfile >0</>
                                  <emptydir >0</>
                                  <exclude ></>
                               </>
                               <_ >
-                                 <filename >D:\Cakewalk-Control-Surface-SDK\Surfaces\MackieControl\Installer\MackieControl-MMcL.pdf</>
+                                 <filename >C:\Projects\msmcleod\Cakewalk-Control-Surface-SDK\Surfaces\MackieControl\Installer\MackieControl-MMcL.pdf</>
                                  <recurse >1</>
                                  <justfile >0</>
                                  <emptydir >0</>
                                  <exclude ></>
                               </>
                               <_ >
-                                 <filename >D:\Cakewalk-Control-Surface-SDK\Surfaces\MackieControl\Installer\UnregisterMMcLMackieControl.bat</>
+                                 <filename >C:\Projects\msmcleod\Cakewalk-Control-Surface-SDK\Surfaces\MackieControl\Installer\UnregisterMMcLMackieControl.bat</>
                                  <recurse >1</>
                                  <justfile >0</>
                                  <emptydir >0</>

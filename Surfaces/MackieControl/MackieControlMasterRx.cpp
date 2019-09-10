@@ -1165,7 +1165,7 @@ void CMackieControlMaster::OnSwitchSave()
 			break;
 
 		case MCS_MODIFIER_M2:
-			DoCommand(CMD_SAVE_COPY_AS);
+			DoCommand(CMD_FILE_SAVE_COPY_AS);
 			break;
 
 		case MCS_MODIFIER_M3:
@@ -1701,6 +1701,10 @@ void CMackieControlMaster::MoveRewindOrFastForward(Direction eDir)
 			break;
 
 		default:
+			// This fixes the issue where RWD doesn't work when play was started via GUI, and stop was done via CS
+			// TODO: work out how it ever gets to this state
+			NudgeTimeCursor(m_cState.GetTransportResolution(), eDir);
+			SetTransportCallbackTimer(0.25f, 300, 15);
 			break;
 	}
 }
@@ -2083,7 +2087,7 @@ bool CMackieControlMaster::OnHuiSwitch(BYTE bD1, BYTE bD2)
 		case HUI_KEYPAD_MINUS:		if (bDown) FakeKeyPress(false, false, false, useKeypad ? VK_SUBTRACT : '-');
 		case HUI_KEYPAD_EQUALS:		if (bDown) FakeKeyPress(false, false, false, '=');
 		case HUI_KEYPAD_FWDSLASH:	if (bDown) FakeKeyPress(false, false, false, useKeypad ? VK_DIVIDE : '/');
-		case HUI_KEYPAD_ASTERIX:	if (bDown) FakeKeyPress(false, false, false, useKeypad ? VK_MULTIPLY : '*');
+		case HUI_KEYPAD_ASTERISK:	if (bDown) FakeKeyPress(false, false, false, useKeypad ? VK_MULTIPLY : '*');
 		case HUI_KEYPAD_DOT:		if (bDown) FakeKeyPress(false, false, false, useKeypad ? VK_SEPARATOR : '.');
 	}
 

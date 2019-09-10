@@ -773,6 +773,9 @@ void CMackieControlBase::SetParamToProperty(SONAR_MIXER_STRIP eMixerStrip, DWORD
 
 			pParam->SetParams(eMixerStrip, dwStripNum, eMixerParam, MAKELONG(dwPluginNum, i->second.m_dwParamNum));
 			pParam->SetAttribs(i->second.m_eDataType, i->second.m_fDefaultValue, i->second.m_fStepSize);
+			if ( ::strlen( &i->second.m_szAltLabel[0] ) )
+				pParam->SetAlternateLabel( &i->second.m_szAltLabel[0] );
+
 		}
 #if 0
 		float fVal;

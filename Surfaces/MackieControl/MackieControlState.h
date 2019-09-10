@@ -94,6 +94,8 @@ enum LevelMeters
 #define PT_DYNAMICS		0x0004
 #define PT_ALL			0xFFFF
 
+#define MAX_LABEL_LEN 6
+
 struct CParameterProperties
 {
 	CParameterProperties()
@@ -108,6 +110,7 @@ struct CParameterProperties
 	DataType m_eDataType;
 	float m_fDefaultValue;
 	float m_fStepSize;
+	char  m_szAltLabel[MAX_LABEL_LEN + 1] = { '\0','\0','\0' ,'\0' ,'\0' ,'\0' ,'\0' };
 };
 
 typedef std::map<DWORD, CParameterProperties> mapParameterProperties;
@@ -286,8 +289,9 @@ public:
 	void SetTempDisplayText(const char *szText);
 
 	void LoadPluginMappings();
-	void LoadParameterProperties(const char *szFile, const char *szPluginName, const char *szParamName, int iIndex, mapParameterProperties *mapParamProps);
+	void LoadParameterProperties(const char *szFile, const char *szPluginName, const char *szParamName, int iIndex, mapParameterProperties *mapParamProps, bool isLabelLine = false);
 	bool ParseParameterPropertiesLine(char *szLine, CParameterProperties *pPluginProps);
+	bool ParseParameterPropertiesLabelLine( char *szLine, CParameterProperties *pPluginProps );
 	void DumpPluginProperties();
 
 	void AddUnit(CMackieControlBase *pUnit);
