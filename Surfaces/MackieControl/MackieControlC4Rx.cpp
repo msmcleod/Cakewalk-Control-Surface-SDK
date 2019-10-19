@@ -238,7 +238,7 @@ void CMackieControlC4::OnSwitchChanStrip()
 		return;
 
 	if (m_eAssignmentMode[m_eSplit] == MCS_ASSIGNMENT_CHANNEL_STRIP)
-		m_eAssignmentMode[m_eSplit] = MCS_ASSIGNMENT_MUTLI_CHANNEL;
+		m_eAssignmentMode[m_eSplit] = MCS_ASSIGNMENT_MULTI_CHANNEL;
 	else
 		m_eAssignmentMode[m_eSplit] = MCS_ASSIGNMENT_CHANNEL_STRIP;
 
@@ -528,16 +528,34 @@ void CMackieControlC4::OnSwitchVPot(BYTE row, BYTE col)
 		case C4_ASSIGNMENT_TRACK:
 			{
 				C4SplitSection eSplit = (row < 2) ? C4_UPPER : C4_LOWER;
-
+				SONAR_MIXER_STRIP prevStrip = GetMixerStrip( eSplit );
+				
 				if (row == 0 || row == 2)
 				{
 					switch (col)
 					{
-						case 0: SetMixerStrip(eSplit, MIX_STRIP_TRACK);		break;
-						case 1: SetMixerStrip(eSplit, MIX_STRIP_BUS);		break;
-						case 2: SetMixerStrip(eSplit, MIX_STRIP_MASTER);	break;
-						case 4: ToggleLevelMeters(eSplit);					break;
-						case 5: ToggleDisplayValues(eSplit);				break;
+						case 0: SetMixerStrip( eSplit, MIX_STRIP_TRACK );
+								if ( prevStrip == MIX_STRIP_RACK )
+									SetAssignment( eSplit, GetPreSynthRackAssignment( eSplit ) );
+								break;
+
+						case 1: SetMixerStrip(eSplit, MIX_STRIP_BUS);		
+								if ( prevStrip == MIX_STRIP_RACK )
+									SetAssignment( eSplit, GetPreSynthRackAssignment( eSplit ) );
+								break;
+
+						case 2: SetMixerStrip(eSplit, MIX_STRIP_MASTER);
+								if ( prevStrip == MIX_STRIP_RACK )
+									SetAssignment( eSplit, GetPreSynthRackAssignment( eSplit ) );
+								break;
+
+						case 3: SetMixerStrip(eSplit, MIX_STRIP_RACK);
+								SetPreSynthRackAssignment( eSplit, GetAssignment( eSplit ) );
+								SetAssignment(eSplit, MCS_ASSIGNMENT_PLUGIN);
+								break;
+
+						case 4: ToggleLevelMeters(eSplit); break;
+						case 5: ToggleDisplayValues(eSplit); break;
 						default: break;
 					}
 				}
@@ -545,12 +563,13 @@ void CMackieControlC4::OnSwitchVPot(BYTE row, BYTE col)
 				{
 					switch (col)
 					{
-						case 0: SetAssignment(eSplit, MCS_ASSIGNMENT_PARAMETER);	break;
-						case 1: SetAssignment(eSplit, MCS_ASSIGNMENT_SEND);			break;
-						case 2: SetAssignment(eSplit, MCS_ASSIGNMENT_PAN);			break;
-						case 3: SetAssignment(eSplit, MCS_ASSIGNMENT_PLUGIN);		break;
-						case 4: SetAssignment(eSplit, MCS_ASSIGNMENT_EQ);			break;
-						case 5: SetAssignment(eSplit, MCS_ASSIGNMENT_DYNAMICS);		break;
+						// if we're in MIX_STRIP_RACK mode, only allow MCS_ASSIGNMENT_PLUGIN
+						case 0: if ( GetMixerStrip( eSplit ) != MIX_STRIP_RACK) SetAssignment(eSplit, MCS_ASSIGNMENT_PARAMETER);	break;
+						case 1: if ( GetMixerStrip( eSplit ) != MIX_STRIP_RACK) SetAssignment(eSplit, MCS_ASSIGNMENT_SEND);			break;
+						case 2: if ( GetMixerStrip( eSplit ) != MIX_STRIP_RACK) SetAssignment(eSplit, MCS_ASSIGNMENT_PAN);			break;
+						case 3: SetAssignment(eSplit, MCS_ASSIGNMENT_PLUGIN);														break;
+						case 4: if ( GetMixerStrip( eSplit ) != MIX_STRIP_RACK) SetAssignment(eSplit, MCS_ASSIGNMENT_EQ);			break;
+						case 5: if ( GetMixerStrip( eSplit ) != MIX_STRIP_RACK) SetAssignment(eSplit, MCS_ASSIGNMENT_DYNAMICS);		break;
 						default: break;
 					}
 				}

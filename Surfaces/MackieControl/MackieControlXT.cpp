@@ -227,6 +227,9 @@ void CMackieControlXT::OnConnect()
 
 	CCriticalSectionAuto csa(m_cState.GetCS());
 	ReconfigureXT(true);
+
+	m_HwLCDDisplay.WriteCentered( 0, "", true );
+	m_HwLCDDisplay.WriteCentered( 1, "", true );
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -343,6 +346,7 @@ void CMackieControlXT::TempDisplaySelectedTrackName()
 		case MIX_STRIP_MAIN:	snprintf(szTrackType, sizeof(szTrackType), "VMain %c", dwStripNum + 'A');	break;
 		case MIX_STRIP_BUS:		snprintf(szTrackType, sizeof(szTrackType), "Bus %d", dwStripNum + 1);		break;
 		case MIX_STRIP_MASTER:	snprintf(szTrackType, sizeof(szTrackType), "Master %d", dwStripNum + 1);	break;
+		case MIX_STRIP_RACK:	snprintf(szTrackType, sizeof(szTrackType), "Synth Rack");					break;
 		default:
 			return;
 	}
@@ -354,16 +358,29 @@ void CMackieControlXT::TempDisplaySelectedTrackName()
 		char szPluginName[64];
 		dwLen = sizeof(szPluginName);
 
-		if (GetCurrentPluginName(m_cState.GetAssignment(), m_cState.GetMixerStrip(),
-								m_cState.GetSelectedStripNum(), m_cState.GetPluginNumOffset(),
-								szPluginName, &dwLen))
-			snprintf(szLine, sizeof(szLine), "%s: \"%s\", Plugin: \"%s\"", szTrackType, szStripName, szPluginName);
+		if ( GetCurrentPluginName( m_cState.GetAssignment(), m_cState.GetMixerStrip(),
+			m_cState.GetSelectedStripNum(), m_cState.GetPluginNumOffset(),
+			szPluginName, &dwLen ) )
+		{
+			if ( eMixerStrip == MIX_STRIP_RACK )
+				snprintf( szLine, sizeof( szLine ), "Rack Synth %d: %s", m_cState.GetPluginNumOffset() + 1, szPluginName );
+			else
+				snprintf( szLine, sizeof( szLine ), "%s: \"%s\", Plugin %d: \"%s\"", szTrackType, szStripName, m_cState.GetPluginNumOffset() + 1, szPluginName );
+		}
 		else
-			snprintf(szLine, sizeof(szLine), "%s: \"%s\", Plugin: --None--", szTrackType, szStripName);
+		{
+			if ( eMixerStrip == MIX_STRIP_RACK )
+				snprintf( szLine, sizeof( szLine ), "Rack Synth %d: --None--", m_cState.GetPluginNumOffset() + 1 );
+			else
+				snprintf( szLine, sizeof( szLine ), "%s: \"%s\", Plugin %d: --None--", szTrackType, szStripName, m_cState.GetPluginNumOffset() + 1 );
+		}
 	}
 	else
 	{
-		snprintf(szLine, sizeof(szLine), "%s: \"%s\"", szTrackType, szStripName);
+		if ( eMixerStrip == MIX_STRIP_RACK )
+			snprintf( szLine, sizeof( szLine ), "%s", szTrackType );
+		else
+			snprintf(szLine, sizeof(szLine), "%s: \"%s\"", szTrackType, szStripName);
 	}
 
 	szLine[LCD_WIDTH] = 0;
@@ -498,8 +515,6 @@ bool CMackieControlXT::TranslateHUIButtons(BYTE bCurrentZone, BYTE bPort, bool b
 
 bool CMackieControlXT::SetHuiLED(BYTE bID, BYTE bVal, bool bForceSend)
 {
-	if (bForceSend); // TODO
-
 	switch (bID)
 	{
 		case MC_REC_ARM_1:

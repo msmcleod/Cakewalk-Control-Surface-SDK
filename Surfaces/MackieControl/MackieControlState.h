@@ -17,7 +17,7 @@
 #define M1_TO_M4_MASK			0x0F
 
 // Number of mixer strip types (MIX_STRIP_*)
-#define NUM_MIXER_STRIP_TYPES			6
+#define NUM_MIXER_STRIP_TYPES			7
 
 // Number of user configurable function keys and foot switches
 #define NUM_USER_FUNCTION_KEYS			8
@@ -39,7 +39,7 @@ enum Assignment
 
 enum AssignmentMode
 {
-	MCS_ASSIGNMENT_MUTLI_CHANNEL,
+	MCS_ASSIGNMENT_MULTI_CHANNEL,
 	MCS_ASSIGNMENT_CHANNEL_STRIP,
 	NUM_ASSIGNMENT_MODES
 };
@@ -198,6 +198,9 @@ public:
 	SONAR_MIXER_STRIP GetMixerStrip()	{ return m_eMixerStrip; };
 	Assignment GetAssignment()			{ return m_eAssignment; };
 	AssignmentMode GetAssignmentMode()	{ return m_eAssignmentMode; };
+	Assignment GetPreSynthRackAssignment()	{ return m_ePreSynthRackAssignment; };
+	bool GetPreSynthRackEditMode()		{ return m_bPreSynthRackEditMode; };
+	AssignmentMode  GetPreSynthRackAssignmentMode() { return m_ePreSynthRackAssignmentMode; };
 	FlipMode GetFlipMode()				{ return m_eFlipMode; };
 	DWORD GetModifiers(DWORD dwMask)	{ return m_dwModifiers & dwMask; };
 	NavigationMode GetNavigationMode()	{ return m_eNavigationMode; };
@@ -256,6 +259,7 @@ public:
 	void SetSelectedStripNum(DWORD dwSelectedStripNum, ISonarMixer *pMixer =NULL);
 	void SetMixerStrip(SONAR_MIXER_STRIP eMixerStrip);
 	void SetAssignment(Assignment eAssignment);
+	void SavePreSynthRackAssignments();
 	void SetAssignmentMode(AssignmentMode eAssignmentMode);
 	void CycleFlipMode();
 	void SetFlipMode(FlipMode eFlipMode);
@@ -332,6 +336,9 @@ protected:
 
 	DWORD m_dwSelectedStripNum;
 	SONAR_MIXER_STRIP m_eMixerStrip;
+	bool m_bPreSynthRackEditMode;
+	Assignment m_ePreSynthRackAssignment;
+	AssignmentMode m_ePreSynthRackAssignmentMode;
 	Assignment m_eAssignment;
 	AssignmentMode m_eAssignmentMode;
 	FlipMode m_eFlipMode;

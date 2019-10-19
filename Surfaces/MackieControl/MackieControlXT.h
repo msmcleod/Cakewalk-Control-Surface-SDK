@@ -46,7 +46,8 @@ static const char s_szMackieControlXTFriendlyNamePropPage[] = "Mackie Control XT
 #define NUM_MAIN_CHANNELS			8
 
 // Number of refreshes before a ping is sent to the HUI
-#define HUI_PING_COUNTDOWN 100
+// Using the default refresh rate of 75ms this means every 0.75 seconds
+#define HUI_PING_COUNTDOWN 10
 
 /////////////////////////////////////////////////////////////////////////////
 // CMackieControlXT
@@ -124,9 +125,9 @@ protected:
 	bool OnSwitch(BYTE bD1, BYTE bD2);		// *Not* virtual
 	bool OnVPot(BYTE bD1, BYTE bD2);
 	void OnSwitchVPot(BYTE bChan);
-	void OnSwitchRecArm(BYTE bChan);
-	void OnSwitchSolo(BYTE bChan);
-	void OnSwitchMute(BYTE bChan);
+	bool OnSwitchRecArm(BYTE bChan);
+	bool OnSwitchSolo(BYTE bChan);
+	bool OnSwitchMute(BYTE bChan);
 	void OnSwitchSelect(BYTE bChan);
 	void OnSwitchFader(BYTE bChan, bool bDown);
 

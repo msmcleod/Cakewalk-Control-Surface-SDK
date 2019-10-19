@@ -53,18 +53,22 @@ CMackieControlState::CMackieControlState()
 	{
 		// In paramter mode the faders are in position 0, so
 		// set the inital offset for multi-channel mode to 1 (pan)
-		m_dwParamNumOffset[n][MCS_ASSIGNMENT_PARAMETER][MCS_ASSIGNMENT_MUTLI_CHANNEL] = 1;
+		m_dwParamNumOffset[n][MCS_ASSIGNMENT_PARAMETER][MCS_ASSIGNMENT_MULTI_CHANNEL] = 1;
 
 		// Similarly, the first send parameter is send enable,
 		// so change the starting point to 1 (send level)
-		m_dwParamNumOffset[n][MCS_ASSIGNMENT_SEND][MCS_ASSIGNMENT_MUTLI_CHANNEL] = 1;
+		m_dwParamNumOffset[n][MCS_ASSIGNMENT_SEND][MCS_ASSIGNMENT_MULTI_CHANNEL] = 1;
 	}
 
 	m_dwSelectedStripNum = 0;
 
 	m_eMixerStrip = MIX_STRIP_TRACK;
 	m_eAssignment = MCS_ASSIGNMENT_PARAMETER;
-	m_eAssignmentMode = MCS_ASSIGNMENT_MUTLI_CHANNEL;
+	m_eAssignmentMode = MCS_ASSIGNMENT_MULTI_CHANNEL; 
+
+	m_ePreSynthRackAssignment = MCS_ASSIGNMENT_PARAMETER;
+	m_ePreSynthRackAssignmentMode = MCS_ASSIGNMENT_MULTI_CHANNEL;
+	m_bPreSynthRackEditMode = false;
 
 	m_eFlipMode = MCS_FLIP_NORMAL;
 
@@ -276,6 +280,16 @@ void CMackieControlState::SetAssignment(Assignment eAssignment)
 
 /////////////////////////////////////////////////////////////////////////////
 
+void CMackieControlState::SavePreSynthRackAssignments()
+{
+	m_ePreSynthRackAssignmentMode = m_eAssignmentMode;
+	m_ePreSynthRackAssignment = m_eAssignment;
+
+	DWORD dwMods = GetModifiers( M1_TO_M4_MASK | MCS_MODIFIER_EDIT | MCS_MODIFIER_NUMERIC );
+	m_bPreSynthRackEditMode = (dwMods & MCS_MODIFIER_EDIT);
+}
+
+/////////////////////////////////////////////////////////////////////////////
 void CMackieControlState::SetAssignmentMode(AssignmentMode eAssignmentMode)
 {
 	if (m_eAssignmentMode != eAssignmentMode)
@@ -298,7 +312,11 @@ void CMackieControlState::CycleFlipMode()
 			break;
 
 		case MCS_FLIP_DUPLICATE:
-			SetFlipMode(MCS_FLIP_FLIP);
+			// Don't go to MCS_FLIP_FLIP mode when using MIX_STRIP_RACK
+			if ( m_eMixerStrip == MIX_STRIP_RACK )
+				SetFlipMode( MCS_FLIP_NORMAL );
+			else
+				SetFlipMode(MCS_FLIP_FLIP);
 			break;
 
 		case MCS_FLIP_FLIP:

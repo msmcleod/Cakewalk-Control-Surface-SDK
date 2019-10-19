@@ -63,7 +63,7 @@ void CMackieControlC4::ReconfigureC4(bool bForce)
 		{
 			C4SplitSection eSplit = GetSplitForRow(m);
 
-			bool bEnableMeters = (MCS_ASSIGNMENT_MUTLI_CHANNEL == GetAssignmentMode(eSplit) &&
+			bool bEnableMeters = (MCS_ASSIGNMENT_MULTI_CHANNEL == GetAssignmentMode(eSplit) &&
 									GetDisplayLevelMeters(eSplit));
 
 			if (!bEnableMeters)
@@ -79,7 +79,7 @@ void CMackieControlC4::ReconfigureC4(bool bForce)
 		{
 			C4SplitSection eSplit = GetSplitForRow(m);
 
-			bool bEnableMeters = (MCS_ASSIGNMENT_MUTLI_CHANNEL == GetAssignmentMode(eSplit) &&
+			bool bEnableMeters = (MCS_ASSIGNMENT_MULTI_CHANNEL == GetAssignmentMode(eSplit) &&
 									GetDisplayLevelMeters(eSplit));
 
 			if (bEnableMeters)
@@ -126,7 +126,7 @@ bool CMackieControlC4::ReconfigureC4Half(C4SplitSection eSplit, int first, int l
 	// Check for changes in the number of plugins
 	if (IsAPluginMode(eAssignment))
 	{
-		if (MCS_ASSIGNMENT_MUTLI_CHANNEL == eAssignmentMode)
+		if (MCS_ASSIGNMENT_MULTI_CHANNEL == eAssignmentMode)
 		{
 			DWORD N = dwStripNumOffset;
 
@@ -188,7 +188,8 @@ bool CMackieControlC4::ReconfigureC4Half(C4SplitSection eSplit, int first, int l
 				case MIX_STRIP_AUX:			pConf = &CMackieControlC4::ConfParameterAux;		break;
 				case MIX_STRIP_MAIN:		pConf = &CMackieControlC4::ConfParameterMain;		break;
 				case MIX_STRIP_BUS:			pConf = &CMackieControlC4::ConfParameterBus;		break;
-				case MIX_STRIP_MASTER:		pConf = &CMackieControlC4::ConfParameterMaster;	break;
+				case MIX_STRIP_MASTER:		pConf = &CMackieControlC4::ConfParameterMaster;		break;
+				case MIX_STRIP_RACK:		return false; 										break;
 				default:
 					TRACE("CMackieControlC4::ReconfigureC4(): Error: unknown strip type!\n");
 					return false;
@@ -239,7 +240,7 @@ bool CMackieControlC4::ReconfigureC4Half(C4SplitSection eSplit, int first, int l
 	DWORD dwModifiers = GetModifiers(MCS_MODIFIER_M1);
 
 	// VPots are dependent on the assignment mode
-	if (MCS_ASSIGNMENT_MUTLI_CHANNEL == eAssignmentMode)
+	if (MCS_ASSIGNMENT_MULTI_CHANNEL == eAssignmentMode)
 	{
 		DWORD N = dwStripNumOffset;
 

@@ -114,11 +114,14 @@ void CMackieControlXT::UpdateUpperLCD(bool bForceSend)
 
 void CMackieControlXT::UpdateLowerLCD(bool bForceSend)
 {
+	if ( UsingHUIProtocol() )
+		return;
+
 	char szLine[128];
 	szLine[0] = 0;
 	BYTE bX = 0;
 
-	bool bDisplayLevelMeters = (m_cState.GetAssignmentMode() == MCS_ASSIGNMENT_MUTLI_CHANNEL &&
+	bool bDisplayLevelMeters = (m_cState.GetAssignmentMode() == MCS_ASSIGNMENT_MULTI_CHANNEL &&
 								m_cState.GetDisplayLevelMeters() == METERS_BOTH);
 
 	bool bDisplayFlip = m_cState.GetDisplayFlip();
