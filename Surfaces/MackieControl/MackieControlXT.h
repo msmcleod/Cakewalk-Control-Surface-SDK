@@ -171,6 +171,7 @@ protected:
 	DWORD m_dwTempDisplayValuesCounter[NUM_MAIN_CHANNELS];
 
 	virtual void ZeroAllFaders();
+	virtual void ClearLCDDisplay( bool bTurnMetersOff, bool bTurnMetersBackOn );
 
 	// HUI specific stuff
 

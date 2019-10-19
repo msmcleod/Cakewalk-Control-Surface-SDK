@@ -206,6 +206,26 @@ HRESULT CMackieControlXT::GetSizeMax( ULARGE_INTEGER* pcbSize )
 }
 
 /////////////////////////////////////////////////////////////////////////////
+
+void CMackieControlXT::ClearLCDDisplay( bool bTurnMetersOff, bool bTurnMetersBackOn )
+{
+	// turn metering off
+	if ( bTurnMetersOff )
+		for ( int i = 0; i < NUM_MAIN_CHANNELS; i++ )
+		{
+			m_HwLCDDisplay.SetMeterMode( i, true, false, false, true );
+		}
+
+	// write spaces to the lcd strips
+	m_HwLCDDisplay.WriteCentered( 0, " ", true );
+	m_HwLCDDisplay.WriteCentered( 1, " ", true );
+
+	// force the lower LCD to update, which will turn metering back on if
+	// necessary.
+	if ( bTurnMetersBackOn )
+		UpdateLowerLCD( true );
+}
+
 /////////////////////////////////////////////////////////////////////////////
 
 void CMackieControlXT::OnConnect()
@@ -228,8 +248,7 @@ void CMackieControlXT::OnConnect()
 	CCriticalSectionAuto csa(m_cState.GetCS());
 	ReconfigureXT(true);
 
-	m_HwLCDDisplay.WriteCentered( 0, "", true );
-	m_HwLCDDisplay.WriteCentered( 1, "", true );
+	ClearLCDDisplay(true, true);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -242,8 +261,7 @@ void CMackieControlXT::OnDisconnect()
 	{
 		ZeroAllFaders();
 
-		m_HwLCDDisplay.WriteCentered(0, "", true);
-		m_HwLCDDisplay.WriteCentered(1, "", true);
+		ClearLCDDisplay( true, false );
 	}
 }
 
