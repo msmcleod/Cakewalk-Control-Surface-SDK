@@ -236,8 +236,8 @@ bool CMackieControlC4::ReconfigureC4Half(C4SplitSection eSplit, int first, int l
 		}
 	}
 
-	// Only check for M1 - this stops the C4 using the M2-M4 quick access bindings
-	DWORD dwModifiers = GetModifiers(MCS_MODIFIER_M1);
+	// Only check for M1 (unless we're in plugin mode) - this stops the C4 using the M2-M4 quick access bindings
+	DWORD dwModifiers = GetModifiers( IsAPluginMode( eAssignment ) ? M1_TO_M4_MASK : MCS_MODIFIER_M1 );
 
 	// VPots are dependent on the assignment mode
 	if (MCS_ASSIGNMENT_MULTI_CHANNEL == eAssignmentMode)

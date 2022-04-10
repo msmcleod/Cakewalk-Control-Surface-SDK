@@ -106,6 +106,9 @@ protected:
 		MC_FADER_5,				MC_FADER_6,		MC_FADER_7,		MC_FADER_8,
 	};
 
+	bool bFirstLCDRefreshCall = true;
+	bool bFirstUnloadedProjectRefreshCall = true;
+
 	virtual void OnConnect();
 	virtual void OnDisconnect();
 	virtual bool OnMidiInShort(BYTE bStatus, BYTE bD1, BYTE bD2);
@@ -165,6 +168,7 @@ protected:
 	CMixParam m_SwArchive[NUM_MAIN_CHANNELS];
 	CMixParam m_SwInputEcho[NUM_MAIN_CHANNELS];
 	CMixParam m_SwFader[NUM_MAIN_CHANNELS];
+	CMixParam m_SwFXBin[NUM_MAIN_CHANNELS];
 
 	char m_szTempDisplayText[LCD_WIDTH];
 	DWORD m_dwTempDisplayTextCounter;
@@ -178,6 +182,10 @@ protected:
 	int m_huiPingCounter = HUI_PING_COUNTDOWN;
 	virtual bool TranslateHUIButtons(BYTE bCurrentZone, BYTE bPort, bool bOn, BYTE &bD1, BYTE &bD2);
 	virtual bool SetHuiLED(BYTE bID, BYTE bVal, bool bForceSend);
+	virtual bool TranslateUniversalLED( BYTE &bD1 ) override { return true; }
+	virtual bool TranslateUniversalButtons( BYTE &bD1, BYTE &bD2 ) override { return true; }
+	virtual bool TranslateCubaseLED( BYTE &bD1 ) override { return true; }
+	virtual bool TranslateCubaseButtons( BYTE &bD1, BYTE &bD2 ) override { return true; }
 	void PingHuiIfRequired();
 };
 

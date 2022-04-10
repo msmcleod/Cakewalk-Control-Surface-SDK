@@ -260,6 +260,21 @@ void CMackieControlC4::OnSwitchFunction(bool bDown)
 
 void CMackieControlC4::OnSwitchModifier(bool bDown, DWORD dwMask)
 {
+	// if we're plugin mode, allow modifiers M2, M3 & M4 to shift parameter banks. M1 is reserved for fine adjustment mode.
+	Assignment assignment = m_eAssignment[m_eSplit];
+	switch ( assignment )
+	{
+		case MCS_ASSIGNMENT_PLUGIN:
+		case MCS_ASSIGNMENT_EQ:
+		case MCS_ASSIGNMENT_EQ_FREQ_GAIN:
+		case MCS_ASSIGNMENT_DYNAMICS:
+		{			
+			int nShiftAmount = (dwMask >= MCS_MODIFIER_M2 && dwMask <= MCS_MODIFIER_M4) ? 32 + (32 * dwMask - MCS_MODIFIER_M1) : 0;
+			ShiftParamNumOffset( m_eSplit, bDown ? nShiftAmount : -nShiftAmount);
+			m_dwC4UpdateCount++;
+		}
+	}
+
 	if (bDown)											// Modifier on
 		EnableModifier(dwMask);
 	else												// Modifier off
