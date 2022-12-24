@@ -99,9 +99,9 @@ private:
 	JogResolution m_eJogResolution;
 	JogResolution m_eTransportResolution;
 	bool m_bDisplaySMPTE;
-	bool m_bUseHUIProtocol;
-	bool m_bUseUniversalProtocol;
-	bool m_bUseCubaseProtocol;
+	bool m_bUseHUIProtocol = false;
+	bool m_bUseUniversalProtocol = false;
+	bool m_bUseCubaseProtocol = false;
 
 	// Generated message map functions
 	//{{AFX_MSG(CMackieControlMasterPropPage)

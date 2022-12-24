@@ -492,6 +492,8 @@ void CMackieControlMasterPropPage::TransferSettings(bool bSave)
 		{
 			m_pSurface->SetDisableHandshake(true);
 			m_pSurface->SetScrubBankSelectsTrackBus(false);
+			m_pSurface->SetUseCubaseProtocol( false );
+			m_pSurface->SetUseUniversalProtocol( false );
 			m_pSurface->SetUseHUIProtocol(true);
 			m_cDisableHandshake.SetCheck(1);
 			m_cScrubBankSelectsTrackBus.SetCheck(0);
@@ -503,6 +505,8 @@ void CMackieControlMasterPropPage::TransferSettings(bool bSave)
 		}
 		else if ( m_bUseUniversalProtocol )
 		{
+			m_pSurface->SetUseHUIProtocol( false );
+			m_pSurface->SetUseCubaseProtocol( false );
 			m_pSurface->SetUseUniversalProtocol( true );
 			m_pSurface->SetHUIKeyPadControlsKeyPad( false );
 			m_cDisableHandshake.SetCheck( 1 );
@@ -512,6 +516,8 @@ void CMackieControlMasterPropPage::TransferSettings(bool bSave)
 		}
 		else if ( m_bUseCubaseProtocol )
 		{
+			m_pSurface->SetUseUniversalProtocol( false );
+			m_pSurface->SetUseHUIProtocol( false );
 			m_pSurface->SetUseCubaseProtocol( true );
 			m_pSurface->SetHUIKeyPadControlsKeyPad( false );
 			m_cDisableHandshake.SetCheck( 1 );
@@ -521,7 +527,9 @@ void CMackieControlMasterPropPage::TransferSettings(bool bSave)
 		}
 		else
 		{
+			m_pSurface->SetUseUniversalProtocol( false );
 			m_pSurface->SetUseHUIProtocol(false);
+			m_pSurface->SetUseCubaseProtocol( false );
 			m_pSurface->SetHUIKeyPadControlsKeyPad(false);
 			m_pSurface->SetUseUniversalProtocol( false );
 			m_pSurface->SetUseCubaseProtocol( false );
@@ -642,6 +650,9 @@ void CMackieControlMasterPropPage::TransferSettings(bool bSave)
 		m_cScrubBankSelectsTrackBus.SetCheck(m_pSurface->GetScrubBankSelectsTrackBus() ? 1 : 0);
 
 		m_bUseHUIProtocol = m_pSurface->GetUseHUIProtocol();
+		m_bUseCubaseProtocol = m_pSurface->GetUseCubaseProtocol();
+		m_bUseUniversalProtocol = m_pSurface->GetUseUniversalProtocol();
+
 		if ( m_bUseHUIProtocol )
 			CheckRadioButton( IDC_PROTOCOL_MCU, IDC_PROTOCOL_HUI, IDC_PROTOCOL_HUI );
 		else if ( m_bUseUniversalProtocol )

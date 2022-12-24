@@ -368,10 +368,10 @@ protected:
 	bool m_bDisableHandshake;
 	bool m_bExcludeFiltersFromPlugins;
 	bool m_bScrubBankSelectsTrackBus;
-	bool m_bUseHUIProtocol;
-	bool m_bHUIKeyPadControlsKeyPad;
-	bool m_bUseUniversalProtocol;
-	bool m_bUseCubaseProtocol;
+	bool m_bUseHUIProtocol = false;
+	bool m_bHUIKeyPadControlsKeyPad = false;
+	bool m_bUseUniversalProtocol = false;
+	bool m_bUseCubaseProtocol = false;
 	CKeyBinding m_cUserFunctionKeys[NUM_USER_FUNCTION_KEYS];
 	CKeyBinding m_cUserFootSwitch[NUM_USER_FOOT_SWITCHES];
 	JogResolution m_eJogResolution;

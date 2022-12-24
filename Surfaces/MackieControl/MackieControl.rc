@@ -77,7 +77,7 @@ EXSTYLE WS_EX_CONTROLPARENT
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     LTEXT           "Press F1 for Help.",IDC_STATIC,7,99,57,8
-    LTEXT           "Copyright © 2019, BandLab Technologies Pte. Ltd.",IDC_STATIC,164,99,162,8
+    LTEXT           "Copyright © 2022, BandLab Technologies Pte. Ltd.",IDC_STATIC,164,99,162,8
     LTEXT           "Please see the main Mackie Control properties page for options",IDC_STATIC,67,53,199,8
 END
 
@@ -132,7 +132,7 @@ BEGIN
     GROUPBOX        "Layout",IDC_STATIC,255,302,199,33
     PUSHBUTTON      "Configure Layout",IDC_CONFIGURE_LAYOUT,291,313,128,14
     LTEXT           "Press F1 for Help.",IDC_STATIC,7,339,57,8
-    LTEXT           "Copyright © 2019, BandLab Technologies Pte. Ltd.",IDC_STATIC,293,339,162,8
+    LTEXT           "Copyright © 2022, BandLab Technologies Pte. Ltd.",IDC_STATIC,293,339,162,8
     LTEXT           "Meters:",IDC_STATIC,274,275,24,8
     COMBOBOX        IDC_METERS,299,273,120,150,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
     CONTROL         "Disable handshake",IDC_DISABLE_HANDSHAKE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,274,208,77,10
@@ -192,7 +192,7 @@ BEGIN
     LTEXT           "Display:",IDC_STATIC,245,154,26,8
     EDITTEXT        IDC_DISP8,276,151,40,14,ES_AUTOHSCROLL
     LTEXT           "Press F1 for Help.",IDC_STATIC,7,179,57,8
-    LTEXT           "Copyright © 2019, BandLab Technologies Pte. Ltd.",IDC_STATIC,164,179,162,8
+    LTEXT           "Copyright © 2022, BandLab Technologies Pte. Ltd.",IDC_STATIC,164,179,162,8
 END
 
 

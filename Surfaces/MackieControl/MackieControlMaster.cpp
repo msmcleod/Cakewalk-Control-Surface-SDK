@@ -791,6 +791,7 @@ HRESULT CMackieControlMaster::Load( IStream* pStm )
 		if ( FAILED( SafeRead( pStm, &bUseUniversalProtocol, sizeof( bUseUniversalProtocol ) ) ) )
 		{
 			TRACE( "CMackieControlMaster::Load(): bUseUniversalProtocol failed\n" );
+			bUseUniversalProtocol = false;
 			return E_FAIL;
 		}
 		m_cState.SetUseUniversalProtocol( bUseUniversalProtocol );
@@ -799,6 +800,7 @@ HRESULT CMackieControlMaster::Load( IStream* pStm )
 		if ( FAILED( SafeRead( pStm, &bUseCubaseProtocol, sizeof( bUseCubaseProtocol ) ) ) )
 		{
 			TRACE( "CMackieControlMaster::Load(): bUseCubaseProtocol failed\n" );
+			bUseCubaseProtocol = false;
 			return E_FAIL;
 		}
 		m_cState.SetUseCubaseProtocol( bUseCubaseProtocol );
