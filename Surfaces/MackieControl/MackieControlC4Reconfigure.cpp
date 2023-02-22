@@ -102,6 +102,9 @@ void CMackieControlC4::ReconfigureC4(bool bForce)
 
 bool CMackieControlC4::ReconfigureC4Half(C4SplitSection eSplit, int first, int last, bool bForce)
 {
+	if ( !m_pMixer )
+		return false;
+
 	SONAR_MIXER_STRIP eMixerStrip = GetMixerStrip(eSplit);
 	DWORD dwStripCount = GetStripCount(eMixerStrip);
 

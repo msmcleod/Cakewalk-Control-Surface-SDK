@@ -1,4 +1,4 @@
-﻿<project version = 9 civer = 8.4.10 winver = "2.12/6.2.9200" >
+﻿<project version = 9 civer = 8.5.1 winver = "2.12/6.2.9200" >
    <autorun >1</>
    <autoclose >0</>
    <compname ></>
@@ -258,6 +258,22 @@
                   <headtext ></>
                   <dlgtext ></>
                   <if ></>
+               </>
+               <_ tag = 0 id = unpack >
+                  <desc ></>
+                  <comptype >default</>
+                  <ratio >r5</>
+                  <solid >1</>
+                  <path >inst</>
+                  <custpath ></>
+                  <ifexist >overnewer</>
+                  <if ></>
+                  <srclist >
+                     <rows ></>
+                  </>
+                  <varlist >
+                     <rows ></>
+                  </>
                </>
             </>
             <icofile >default</>
